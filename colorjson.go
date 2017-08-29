@@ -68,7 +68,9 @@ func (f *Formatter) writeIndent(buf *bytes.Buffer, depth int) {
 
 func (f *Formatter) writeObjSep(buf *bytes.Buffer) {
 	if f.Indent != 0 {
-		buf.WriteString("\n")
+		buf.WriteByte('\n')
+	} else {
+		buf.WriteByte(' ')
 	}
 }
 
