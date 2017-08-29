@@ -63,7 +63,7 @@ func (f *Formatter) sprintColor(c *color.Color, s string) string {
 }
 
 func (f *Formatter) writeIndent(buf *bytes.Buffer, depth int) {
-	buf.WriteString(strings.Repeat(" ", f.Indent*depth+1))
+	buf.WriteString(strings.Repeat(" ", f.Indent*depth))
 }
 
 func (f *Formatter) writeObjSep(buf *bytes.Buffer) {
