@@ -2,7 +2,11 @@ Color JSON Pretty Printer for Go
 ================================
 
 This package is based heavily on hokaccha/go-prettyjson but has some noticible differences:
- - faster (recursive descent serializer)
+ - Over twice as fast (recursive descent serializer)
+   ```
+   BenchmarkColorJSONMarshall-4   500000	      2498 ns/op
+   BenchmarkPrettyJSON-4     	  200000	      6145 ns/op
+   ```
  - more customizable (ability to have zero indent, print raw json strings, etc...)
  - better defaults (less bold colors)
 
