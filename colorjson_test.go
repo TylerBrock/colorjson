@@ -8,6 +8,8 @@ func benchmarkMarshall(i int, b *testing.B) {
     simpleMap := make(map[string]interface{})
     simpleMap["a"] = 1
     simpleMap["b"] = "bee"
+    simpleMap["c"] = [3]int{1,2,3}
+    simpleMap["d"] = [3]string{"one", "two", "three"}
 
     // run the Fib function b.N times
     for n := 0; n < b.N; n++ {
@@ -19,6 +21,8 @@ func benchmarkPrettyJSON(i int, b *testing.B) {
     simpleMap := make(map[string]interface{})
     simpleMap["a"] = 1
     simpleMap["b"] = "bee"
+    simpleMap["c"] = [3]int{1,2,3}
+    simpleMap["d"] = [3]string{"one", "two", "three"}
 
     // run the Fib function b.N times
     for n := 0; n < b.N; n++ {

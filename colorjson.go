@@ -118,7 +118,6 @@ func (f *Formatter) marshalArray(a []interface{}, buf *bytes.Buffer, depth int) 
 		return
 	}
 
-	f.writeIndent(buf, depth)
 	buf.WriteString(startArray)
 	f.writeObjSep(buf)
 
