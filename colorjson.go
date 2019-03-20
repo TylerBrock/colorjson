@@ -141,10 +141,32 @@ func (f *Formatter) marshalValue(val interface{}, buf *bytes.Buffer, depth int) 
 		f.marshalArray(v, buf, depth)
 	case string:
 		f.marshalString(v, buf)
+	case int:
+		buf.WriteString(f.sprintColor(f.NumberColor, strconv.FormatInt(int64(v), 10)))
+	case int8:
+		buf.WriteString(f.sprintColor(f.NumberColor, strconv.FormatInt(int64(v), 10)))
+	case int16:
+		buf.WriteString(f.sprintColor(f.NumberColor, strconv.FormatInt(int64(v), 10)))
+	case int32:
+		buf.WriteString(f.sprintColor(f.NumberColor, strconv.FormatInt(int64(v), 10)))
+	case int64:
+		buf.WriteString(f.sprintColor(f.NumberColor, strconv.FormatInt(v, 10)))
+	case uint:
+		buf.WriteString(f.sprintColor(f.NumberColor, strconv.FormatInt(int64(v), 10)))
+	case uint8:
+		buf.WriteString(f.sprintColor(f.NumberColor, strconv.FormatInt(int64(v), 10)))
+	case uint16:
+		buf.WriteString(f.sprintColor(f.NumberColor, strconv.FormatInt(int64(v), 10)))
+	case uint32:
+		buf.WriteString(f.sprintColor(f.NumberColor, strconv.FormatInt(int64(v), 10)))
+	case uint64:
+		buf.WriteString(f.sprintColor(f.NumberColor, strconv.FormatInt(int64(v), 10)))
+	case float32:
+		buf.WriteString(f.sprintColor(f.NumberColor, strconv.FormatFloat(float64(v), 'f', -1, 64)))
 	case float64:
 		buf.WriteString(f.sprintColor(f.NumberColor, strconv.FormatFloat(v, 'f', -1, 64)))
 	case bool:
-		buf.WriteString(f.sprintColor(f.BoolColor, (strconv.FormatBool(v))))
+		buf.WriteString(f.sprintColor(f.BoolColor, strconv.FormatBool(v)))
 	case nil:
 		buf.WriteString(f.sprintColor(f.NullColor, null))
 	}
