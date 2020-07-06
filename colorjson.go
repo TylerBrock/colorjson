@@ -147,6 +147,8 @@ func (f *Formatter) marshalValue(val interface{}, buf *bytes.Buffer, depth int) 
 		buf.WriteString(f.sprintColor(f.BoolColor, (strconv.FormatBool(v))))
 	case nil:
 		buf.WriteString(f.sprintColor(f.NullColor, null))
+	case json.Number:
+		buf.WriteString(f.sprintColor(f.NumberColor, v.String()))
 	}
 }
 
