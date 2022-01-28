@@ -141,6 +141,15 @@ func (f *Formatter) marshalValue(val interface{}, buf *bytes.Buffer, depth int) 
 		f.marshalArray(v, buf, depth)
 	case string:
 		f.marshalString(v, buf)
+	case []string:
+		buf.WriteString("[")
+		for i, s := range v {
+			f.marshalString(s, buf)
+			if i != len(v) - 1 {
+				buf.WriteString(", ")
+			}
+		}
+		buf.WriteString("]")
 	case int:
 		buf.WriteString(f.sprintColor(f.NumberColor, strconv.FormatInt(int64(v), 10)))
 	case int8:
