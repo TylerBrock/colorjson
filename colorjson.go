@@ -32,6 +32,7 @@ type Formatter struct {
 	Indent          int
 	DisabledColor   bool
 	RawStrings      bool
+	EscapeHTML      bool
 }
 
 func NewFormatter() *Formatter {
@@ -45,6 +46,7 @@ func NewFormatter() *Formatter {
 		DisabledColor:   false,
 		Indent:          0,
 		RawStrings:      false,
+		EscapeHTML:      true,
 	}
 }
 
@@ -154,8 +156,16 @@ func (f *Formatter) marshalValue(val interface{}, buf *bytes.Buffer, depth int) 
 
 func (f *Formatter) marshalString(str string, buf *bytes.Buffer) {
 	if !f.RawStrings {
-		strBytes, _ := json.Marshal(str)
-		str = string(strBytes)
+		if f.EscapeHTML {
+			strBytes, _ := json.Marshal(str)
+			str = string(strBytes)
+		} else {
+			strBuf := &strings.Builder{}
+			encoder := json.NewEncoder(strBuf)
+			encoder.SetEscapeHTML(false)
+			_ = encoder.Encode(str)
+			str = strBuf.String()[0 : strBuf.Len()-1]
+		}
 	}
 
 	if f.StringMaxLength != 0 && len(str) >= f.StringMaxLength {
