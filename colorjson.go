@@ -30,6 +30,7 @@ type Formatter struct {
 	NullColor       *color.Color
 	StringMaxLength int
 	Indent          int
+	ObjectSeparator bool
 	DisabledColor   bool
 	RawStrings      bool
 }
@@ -44,6 +45,7 @@ func NewFormatter() *Formatter {
 		StringMaxLength: 0,
 		DisabledColor:   false,
 		Indent:          0,
+		ObjectSeparator: true,
 		RawStrings:      false,
 	}
 }
@@ -63,13 +65,16 @@ func (f *Formatter) sprintColor(c *color.Color, s string) string {
 }
 
 func (f *Formatter) writeIndent(buf *bytes.Buffer, depth int) {
+	if f.Indent == 0 {
+		return
+	}
 	buf.WriteString(strings.Repeat(" ", f.Indent*depth))
 }
 
 func (f *Formatter) writeObjSep(buf *bytes.Buffer) {
 	if f.Indent != 0 {
 		buf.WriteByte('\n')
-	} else {
+	} else if f.ObjectSeparator {
 		buf.WriteByte(' ')
 	}
 }
@@ -100,7 +105,10 @@ func (f *Formatter) marshalMap(m map[string]interface{}, buf *bytes.Buffer, dept
 
 	for _, key := range keys {
 		f.writeIndent(buf, depth+1)
-		buf.WriteString(f.KeyColor.Sprintf("\"%s\": ", key))
+		buf.WriteString(f.KeyColor.Sprintf("\"%s\":", key))
+		if f.ObjectSeparator {
+			buf.WriteByte(' ')
+		}
 		f.marshalValue(m[key], buf, depth+1)
 		remaining--
 		if remaining != 0 {
