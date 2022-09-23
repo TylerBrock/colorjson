@@ -105,7 +105,8 @@ func (f *Formatter) marshalMap(m map[string]interface{}, buf *bytes.Buffer, dept
 
 	for _, key := range keys {
 		f.writeIndent(buf, depth+1)
-		buf.WriteString(f.KeyColor.Sprintf("\"%s\":", key))
+		buf.WriteString(f.KeyColor.Sprintf("\"%s\"", key))
+		buf.WriteByte(':')
 		if f.ObjectSeparator {
 			buf.WriteByte(' ')
 		}
