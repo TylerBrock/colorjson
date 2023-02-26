@@ -100,7 +100,11 @@ func (f *Formatter) marshalMap(m map[string]interface{}, buf *bytes.Buffer, dept
 
 	for _, key := range keys {
 		f.writeIndent(buf, depth+1)
-		buf.WriteString(f.KeyColor.Sprintf("\"%s\": ", key))
+		if f.DisabledColor {
+			buf.WriteString(fmt.Sprintf("\"%s\": ", key))
+		} else {
+			buf.WriteString(f.KeyColor.Sprintf("\"%s\"", key) + ": ")
+		}
 		f.marshalValue(m[key], buf, depth+1)
 		remaining--
 		if remaining != 0 {
